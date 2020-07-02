@@ -36,6 +36,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'rspec-rails', '~> 4.0.0'
   gem 'capybara'
+  gem 'factory_bot_rails'
 end
 
 group :development do

@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_01_210745) do
+ActiveRecord::Schema.define(version: 2020_07_03_171531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "time_entries", force: :cascade do |t|
+    t.datetime "start_time", null: false
+    t.datetime "end_time", null: false
+    t.string "description", limit: 250
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_time_entries_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -27,4 +37,5 @@ ActiveRecord::Schema.define(version: 2020_07_01_210745) do
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
 
+  add_foreign_key "time_entries", "users"
 end

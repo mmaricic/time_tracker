@@ -8,4 +8,10 @@ FactoryBot.define do
     email
     password {'password'}
   end
+
+  factory :time_entry do
+    start_time {Time.new(2020, 07, 01, 11, 00, 00)}
+    end_time {Time.new(2020, 07, 01, 15, 00, 00)}
+    association :user, factory: :user
+  end
 end

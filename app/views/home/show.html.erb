@@ -1,1 +1,3 @@
-<h1><%= current_user.name %></h1>
+<div id="time_entries">
+  <%= render partial: "time_entries/list_item", collection: @time_entries_recorded_today, as: :time_entry %>
+</div>

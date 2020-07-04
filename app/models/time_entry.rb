@@ -7,6 +7,12 @@ class TimeEntry < ApplicationRecord
   validate :start_time_does_not_overlap_with_existing_time_entries, unless: ->{ start_time.nil? }
   validate :end_time_does_not_overlap_with_existing_time_entries, unless: ->{ end_time.nil? }
 
+  class << self
+    def recorded_today
+      where('end_time IS NOT NULL and DATE(start_time) = ?', Date.today)
+    end
+  end
+
   private 
 
   def start_time_is_before_end_time

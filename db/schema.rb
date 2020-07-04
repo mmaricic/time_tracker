@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_03_171531) do
+ActiveRecord::Schema.define(version: 2020_07_04_130220) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "time_entries", force: :cascade do |t|
     t.datetime "start_time", null: false
-    t.datetime "end_time", null: false
+    t.datetime "end_time"
     t.string "description", limit: 250
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false

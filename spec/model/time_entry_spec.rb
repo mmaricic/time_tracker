@@ -8,13 +8,6 @@ describe TimeEntry do
     expect(time_entry.errors[:start_time]).not_to be_empty
   end
 
-  it "validates end time presence" do
-    time_entry = build(:time_entry, end_time: nil)
-    
-    expect(time_entry.valid?).to be false
-    expect(time_entry.errors[:end_time]).not_to be_empty
-  end
-
   it "validates description length" do
     time_entry = build(:time_entry, description: "a"*300)
 

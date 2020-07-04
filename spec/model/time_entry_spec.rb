@@ -1,6 +1,40 @@
 require 'rails_helper'
 
 describe TimeEntry do
+  describe '.recorded_today' do
+    before(:each) do
+      Timecop.freeze(Time.new(2020, 5, 4, 19, 0, 0))
+    end
+
+    it 'returns time entries recorded on the current day' do
+      yesterday_te = create(
+        :time_entry,
+        start_time: Time.new(2020, 5, 1, 16, 0, 0),
+        end_time: Time.new(2020, 5, 1, 17, 0, 0),
+      )
+      today_first_te = create(
+        :time_entry,
+        start_time: Time.new(2020, 5, 4, 10, 0, 0),
+        end_time: Time.new(2020, 5, 4, 12, 0, 0),
+      )
+      today_second_te = create(
+        :time_entry,
+        start_time: Time.new(2020, 5, 4, 12, 30, 0),
+        end_time: Time.new(2020, 5, 4, 14, 0, 0),
+      )
+      today_active_te = create(
+        :time_entry,
+        start_time: Time.new(2020, 5, 4, 17, 0, 0),
+        end_time: nil
+      )
+
+      expect(described_class.recorded_today).to match_array([
+        today_first_te,
+        today_second_te
+      ])
+    end
+  end
+
   it "validates start time presence" do
     time_entry = build(:time_entry, start_time: nil)
     

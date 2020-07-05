@@ -17,6 +17,10 @@ class TimeEntry < ApplicationRecord
     end
   end
 
+  def total_time 
+    (end_time - start_time).to_i
+  end
+
   private 
 
   def start_time_is_before_end_time

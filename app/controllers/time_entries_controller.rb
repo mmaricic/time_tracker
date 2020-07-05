@@ -1,4 +1,5 @@
 class TimeEntriesController < ApplicationController
+  before_action :require_login
   before_action :prevent_multiple_active_time_entries, only: [:create]
 
   def create

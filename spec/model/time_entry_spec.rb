@@ -77,6 +77,20 @@ describe TimeEntry do
     expect(time_entry.errors[:end_time]).not_to be_empty
   end
 
+  context "creating time entry manually" do
+    it "validates end time presence" do
+      time_entry = build(
+        :time_entry,
+        start_time: Time.new(2020, 07, 01, 14, 00, 00),
+        end_time: nil
+      )
+      time_entry.set_manual_creation
+
+      expect(time_entry.valid?).to be false
+      expect(time_entry.errors[:end_time]).not_to be_empty
+    end    
+  end
+
   context "time entries overlap" do
     it "start time overlaps with existing time entry" do
       user = create(:user)

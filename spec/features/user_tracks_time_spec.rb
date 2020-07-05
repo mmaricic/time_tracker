@@ -29,6 +29,40 @@ feature "user tracks time" do
     Timecop.return
   end
 
+  context "creating time entry manually" do
+    scenario "redirects to home page on success" do
+      Timecop.freeze(Time.new(2020, 05, 04))
+      user = create(:user)
+
+      visit new_time_entry_path(as: user)
+      fill_in "Description", with: "manual test"
+      fill_in "Start time", with: "2020-05-04T11:00:00"
+      fill_in "End time", with: "2020-05-04T12:00:00"
+      click_button "Create"
+
+      expect(page).to have_current_path(root_path)
+      within "#time_entry_1" do
+        expect(page).to have_content("manual test")
+        expect(page).to have_content("11:00:00")
+        expect(page).to have_content("12:00:00")
+      end
+
+      Timecop.return
+    end
+
+    scenario "fails when end time is missing" do
+      Timecop.freeze(Time.new(2020, 05, 04))
+      user = create(:user)
+
+      visit new_time_entry_path(as: user)
+      fill_in "Description", with: "manual test"
+      fill_in "Start time", with: "2020-05-04T11:00:00"
+      click_button "Create"
+
+      expect(page).to have_content("End time can't be blank")
+    end
+  end
+
   def unix_millis
     (Time.now.to_f * 1000.0).to_i
   end

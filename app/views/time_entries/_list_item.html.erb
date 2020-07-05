@@ -2,10 +2,14 @@
   <div><%= time_entry.description %></div>
   <div>
     <span>start time:</span>
-    <span><%= time_entry.start_time.strftime("%H:%M") %></span>
+    <span><%= time_entry.start_time.strftime("%H:%M:%S") %></span>
   </div>
   <div>
     <span>end time:</span>
-    <span><%= time_entry.end_time.strftime("%H:%M") %></span>
+    <span><%= time_entry.end_time.strftime("%H:%M:%S") %></span>
+  </div>
+  <div>
+    <span>total time:</span>
+    <span><%= pp_total_time(time_entry.total_time) %></span>
   </div>
 </div>

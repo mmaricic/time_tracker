@@ -1,0 +1,5 @@
+<%= form_for time_entry, remote: true, html: { id: :stop_timer_form } do |f| %>
+  <%= f.text_field :description %>
+  <%= f.hidden_field :end_time %>
+  <%= f.submit "Stop", id: :stop_timer_btn %>
+<% end %>

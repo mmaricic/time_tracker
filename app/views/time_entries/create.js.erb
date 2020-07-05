@@ -1,0 +1,4 @@
+$('#start_timer_form').css('display', 'none');
+$('#start_timer_form > #time_entry_description').val("");
+
+$('#timer_form_container').append("<%= j render partial: "time_entries/stop_timer_form", locals: { time_entry: @time_entry } %>");

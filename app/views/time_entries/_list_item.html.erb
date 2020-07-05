@@ -2,10 +2,10 @@
   <div><%= time_entry.description %></div>
   <div>
     <span>start time:</span>
-    <span><%= time_entry.start_time %></span>
+    <span><%= time_entry.start_time.strftime("%H:%M") %></span>
   </div>
   <div>
     <span>end time:</span>
-    <span><%= time_entry.end_time %></span>
+    <span><%= time_entry.end_time.strftime("%H:%M") %></span>
   </div>
 </div>

@@ -160,4 +160,14 @@ describe TimeEntry do
     end
   end
 
+  it 'calculates total time' do
+    time_entry = create(
+      :time_entry,
+      start_time: Time.new(2020, 05, 04, 10, 30, 00),
+      end_time: Time.new(2020, 05, 04, 11, 17, 17)
+    )
+
+    expect(time_entry.total_time).to eq(47 * 60 + 17)
+    expect(time_entry.total_time).to be_an(Integer)
+  end
 end

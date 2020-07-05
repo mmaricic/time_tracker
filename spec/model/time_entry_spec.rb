@@ -10,17 +10,17 @@ describe TimeEntry do
       yesterday_te = create(
         :time_entry,
         start_time: Time.new(2020, 5, 1, 16, 0, 0),
-        end_time: Time.new(2020, 5, 1, 17, 0, 0),
+        end_time: Time.new(2020, 5, 1, 17, 0, 0)
       )
       today_first_te = create(
         :time_entry,
         start_time: Time.new(2020, 5, 4, 10, 0, 0),
-        end_time: Time.new(2020, 5, 4, 12, 0, 0),
+        end_time: Time.new(2020, 5, 4, 12, 0, 0)
       )
       today_second_te = create(
         :time_entry,
         start_time: Time.new(2020, 5, 4, 12, 30, 0),
-        end_time: Time.new(2020, 5, 4, 14, 0, 0),
+        end_time: Time.new(2020, 5, 4, 14, 0, 0)
       )
       today_active_te = create(
         :time_entry,
@@ -32,6 +32,23 @@ describe TimeEntry do
         today_first_te,
         today_second_te
       ])
+    end
+  end
+
+  describe ".active" do
+    it "returns time entries that are active" do
+      finished_te = create(
+        :time_entry,
+        start_time: Time.new(2020, 5, 1, 16, 0, 0),
+        end_time: Time.new(2020, 5, 1, 17, 0, 0)
+      )
+      active_te = create(
+        :time_entry,
+        start_time: Time.new(2020, 5, 2, 11, 0, 0),
+        end_time: nil
+      )
+
+      expect(described_class.active).to eq([active_te])
     end
   end
 

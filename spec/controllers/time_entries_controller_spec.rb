@@ -18,4 +18,12 @@ describe TimeEntriesController, type: :request do
       expect(response.status).to eq 400
     end
   end
+
+  it 'requires login' do
+    post time_entries_path,
+      params: { time_entry: { description: 'Test', start_time: '2020-05-04T19:55:10' } },
+      headers: { 'Accept' => 'application/javascript' }
+
+    expect(response.status).to eq 401
+  end
 end

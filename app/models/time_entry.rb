@@ -33,8 +33,8 @@ class TimeEntry < ApplicationRecord
   private 
 
   def start_time_is_before_end_time
-    if start_time > end_time
-      errors.add(:end_time, :invalid, message: "end_time cannot be before start_time")
+    if start_time >= end_time
+      errors.add(:end_time, :invalid, message: "end_time cannot be before or same as start_time")
     end
   end
 

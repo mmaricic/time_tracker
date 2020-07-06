@@ -41,6 +41,10 @@ feature "show time entries" do
     visit root_path(as: user)
 
     expect(page).to have_css(dom_id(today_first_te))
+    within(dom_id(today_first_te)) do
+      expect(page).to have_content("10:00:00")
+      expect(page).to have_content("12:00:00")
+    end
     expect(page).to have_css(dom_id(today_second_te))
     expect(page).not_to have_css(dom_id(today_active_te))
     expect(page).not_to have_css(dom_id(today_another_users_te))

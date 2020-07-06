@@ -34,7 +34,7 @@ class TimeEntry < ApplicationRecord
 
   def start_time_is_before_end_time
     if start_time >= end_time
-      errors.add(:end_time, :invalid, message: "end_time cannot be before or same as start_time")
+      errors.add(:end_time, :invalid, message: "cannot be before or same as start_time")
     end
   end
 
@@ -50,7 +50,7 @@ class TimeEntry < ApplicationRecord
     scope = TimeEntry.where(user: user).where("start_time <= :time and end_time >= :time", time: value)
     scope = scope.where.not(id: id) unless new_record?
     if scope.exists?
-      errors.add(field, :invalid, message: "#{field} cannot overlap with an existing time entries")
+      errors.add(field, :invalid, message: "cannot overlap with an existing time entries")
     end
   end
 end

@@ -3,8 +3,8 @@ require "rails_helper"
 feature "user tracks time" do
   scenario "using dashboard", js: true do
     user = create(:user)
-    start_time = Time.new(2020, 5, 4, 10, 0, 0)
-    end_time = Time.new(2020, 5, 4, 13, 0, 0)
+    start_time = Time.new(2020, 5, 4, 10, 0, 0, Time.zone)
+    end_time = Time.new(2020, 5, 4, 13, 0, 0, Time.zone)
 
     Timecop.freeze(start_time)
     visit root_path(as: user) do

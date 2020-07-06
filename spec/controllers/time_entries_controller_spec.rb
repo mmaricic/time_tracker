@@ -7,7 +7,7 @@ describe TimeEntriesController, type: :request do
       time_entry = create(
         :time_entry,
         user: user,
-        start_time: Time.new(2020, 05, 04, 12, 00, 00),
+        start_time: Time.new(2020, 05, 04, 12, 00, 00, Time.zone),
         end_time: nil
       )
 

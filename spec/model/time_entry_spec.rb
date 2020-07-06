@@ -3,28 +3,28 @@ require 'rails_helper'
 describe TimeEntry do
   describe '.recorded_today' do
     before(:each) do
-      Timecop.freeze(Time.new(2020, 5, 4, 19, 0, 0))
+      Timecop.freeze(Time.new(2020, 5, 4))
     end
 
     it 'returns time entries recorded on the current day' do
       yesterday_te = create(
         :time_entry,
-        start_time: Time.new(2020, 5, 1, 16, 0, 0),
-        end_time: Time.new(2020, 5, 1, 17, 0, 0)
+        start_time: Time.new(2020, 5, 1, 16, 0, 0, Time.zone),
+        end_time: Time.new(2020, 5, 1, 17, 0, 0, Time.zone)
       )
       today_first_te = create(
         :time_entry,
-        start_time: Time.new(2020, 5, 4, 10, 0, 0),
-        end_time: Time.new(2020, 5, 4, 12, 0, 0)
+        start_time: Time.new(2020, 5, 4, 10, 0, 0, Time.zone),
+        end_time: Time.new(2020, 5, 4, 12, 0, 0, Time.zone)
       )
       today_second_te = create(
         :time_entry,
-        start_time: Time.new(2020, 5, 4, 12, 30, 0),
-        end_time: Time.new(2020, 5, 4, 14, 0, 0)
+        start_time: Time.new(2020, 5, 4, 12, 30, 0, Time.zone),
+        end_time: Time.new(2020, 5, 4, 14, 0, 0, Time.zone)
       )
       today_active_te = create(
         :time_entry,
-        start_time: Time.new(2020, 5, 4, 17, 0, 0),
+        start_time: Time.new(2020, 5, 4, 17, 0, 0, Time.zone),
         end_time: nil
       )
 
@@ -39,12 +39,12 @@ describe TimeEntry do
     it "returns time entries that are active" do
       finished_te = create(
         :time_entry,
-        start_time: Time.new(2020, 5, 1, 16, 0, 0),
-        end_time: Time.new(2020, 5, 1, 17, 0, 0)
+        start_time: Time.new(2020, 5, 1, 16, 0, 0, Time.zone),
+        end_time: Time.new(2020, 5, 1, 17, 0, 0, Time.zone)
       )
       active_te = create(
         :time_entry,
-        start_time: Time.new(2020, 5, 2, 11, 0, 0),
+        start_time: Time.new(2020, 5, 2, 11, 0, 0, Time.zone),
         end_time: nil
       )
 
@@ -69,8 +69,8 @@ describe TimeEntry do
   it "validates that start_time is before end_time" do
     time_entry = build(
       :time_entry, 
-      start_time: Time.new(2020, 07, 01, 15, 00, 00), 
-      end_time: Time.new(2020, 07, 01, 11, 00, 00)
+      start_time: Time.new(2020, 07, 01, 15, 00, 00, Time.zone), 
+      end_time: Time.new(2020, 07, 01, 11, 00, 00, Time.zone)
     )
 
     expect(time_entry.valid?).to be false
@@ -80,8 +80,8 @@ describe TimeEntry do
   it "validates that start_time is not the same as end_time" do
     time_entry = build(
       :time_entry, 
-      start_time: Time.new(2020, 07, 01, 15, 00, 00), 
-      end_time: Time.new(2020, 07, 01, 15, 00, 00)
+      start_time: Time.new(2020, 07, 01, 15, 00, 00, Time.zone), 
+      end_time: Time.new(2020, 07, 01, 15, 00, 00, Time.zone)
     )
 
     expect(time_entry.valid?).to be false
@@ -92,7 +92,7 @@ describe TimeEntry do
     it "validates end time presence" do
       time_entry = build(
         :time_entry,
-        start_time: Time.new(2020, 07, 01, 14, 00, 00),
+        start_time: Time.new(2020, 07, 01, 14, 00, 00, Time.zone),
         end_time: nil
       )
       time_entry.set_manual_creation
@@ -108,14 +108,14 @@ describe TimeEntry do
       existing_time_entry = create(
         :time_entry,
         user: user,
-        start_time: Time.new(2020, 07, 01, 10, 00, 00),
-        end_time: Time.new(2020, 07, 01, 12, 00, 00)
+        start_time: Time.new(2020, 07, 01, 10, 00, 00, Time.zone),
+        end_time: Time.new(2020, 07, 01, 12, 00, 00, Time.zone)
       )
       new_time_entry = build(
         :time_entry,
         user: user,
-        start_time: Time.new(2020, 07, 01, 11, 00, 00),
-        end_time: Time.new(2020, 07, 01, 15, 00, 00)
+        start_time: Time.new(2020, 07, 01, 11, 00, 00, Time.zone),
+        end_time: Time.new(2020, 07, 01, 15, 00, 00, Time.zone)
       )
 
       expect(existing_time_entry.valid?).to be true
@@ -128,14 +128,14 @@ describe TimeEntry do
       existing_time_entry = create(
         :time_entry,
         user: user,
-        start_time: Time.new(2020, 07, 01, 10, 00, 00),
-        end_time: Time.new(2020, 07, 01, 12, 00, 00)
+        start_time: Time.new(2020, 07, 01, 10, 00, 00, Time.zone),
+        end_time: Time.new(2020, 07, 01, 12, 00, 00, Time.zone)
       )
       new_time_entry = build(
         :time_entry,
         user: user,
-        start_time: Time.new(2020, 07, 01, 07, 00, 00),
-        end_time: Time.new(2020, 07, 01, 11, 00, 00)
+        start_time: Time.new(2020, 07, 01, 07, 00, 00, Time.zone),
+        end_time: Time.new(2020, 07, 01, 11, 00, 00, Time.zone)
       ) 
 
       expect(existing_time_entry.valid?).to be true
@@ -148,14 +148,14 @@ describe TimeEntry do
       existing_time_entry = create(
         :time_entry,
         user: user,
-        start_time: Time.new(2020, 07, 01, 10, 00, 00),
-        end_time: Time.new(2020, 07, 01, 17, 00, 00)
+        start_time: Time.new(2020, 07, 01, 10, 00, 00, Time.zone),
+        end_time: Time.new(2020, 07, 01, 17, 00, 00, Time.zone)
       )
       new_time_entry = build(
         :time_entry,
         user: user,
-        start_time: Time.new(2020, 07, 01, 11, 00, 00),
-        end_time: Time.new(2020, 07, 01, 15, 00, 00)
+        start_time: Time.new(2020, 07, 01, 11, 00, 00, Time.zone),
+        end_time: Time.new(2020, 07, 01, 15, 00, 00, Time.zone)
       )
 
       expect(existing_time_entry.valid?).to be true
@@ -169,15 +169,15 @@ describe TimeEntry do
       existing_time_entry = create(
         :time_entry,
         user: user_1,
-        start_time: Time.new(2020, 07, 01, 10, 00, 00),
-        end_time: Time.new(2020, 07, 01, 17, 00, 00)
+        start_time: Time.new(2020, 07, 01, 10, 00, 00, Time.zone),
+        end_time: Time.new(2020, 07, 01, 17, 00, 00, Time.zone)
       )
       user_2 = create(:user)
       new_time_entry = build(
         :time_entry,
         user: user_2,
-        start_time: Time.new(2020, 07, 01, 11, 00, 00),
-        end_time: Time.new(2020, 07, 01, 15, 00, 00)
+        start_time: Time.new(2020, 07, 01, 11, 00, 00, Time.zone),
+        end_time: Time.new(2020, 07, 01, 15, 00, 00, Time.zone)
       )
 
       expect(existing_time_entry.valid?).to be true
@@ -188,8 +188,8 @@ describe TimeEntry do
   it 'calculates total time' do
     time_entry = create(
       :time_entry,
-      start_time: Time.new(2020, 05, 04, 10, 30, 00),
-      end_time: Time.new(2020, 05, 04, 11, 17, 17)
+      start_time: Time.new(2020, 05, 04, 10, 30, 00, Time.zone),
+      end_time: Time.new(2020, 05, 04, 11, 17, 17, Time.zone)
     )
 
     expect(time_entry.total_time).to eq(47 * 60 + 17)

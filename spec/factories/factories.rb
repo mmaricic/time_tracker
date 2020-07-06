@@ -10,8 +10,8 @@ FactoryBot.define do
   end
 
   factory :time_entry do
-    start_time {Time.new(2020, 07, 01, 11, 00, 00)}
-    end_time {Time.new(2020, 07, 01, 15, 00, 00)}
+    start_time {Time.new(2020, 07, 01, 11, 00, 00, Time.zone)}
+    end_time {Time.new(2020, 07, 01, 15, 00, 00, Time.zone)}
     association :user, factory: :user
   end
 end

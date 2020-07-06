@@ -17,7 +17,7 @@ class TimeEntriesController < ApplicationController
       end
     else
       respond_to do |format|
-        format.js { head :bad_request }
+        format.js { render :alert }
         format.html { render :new }
       end
     end

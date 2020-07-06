@@ -102,6 +102,20 @@ describe TimeEntry do
     end    
   end
 
+  context "updating time entry" do
+    it "validated time_entry presence" do
+      time_entry = create(
+        :time_entry,
+        start_time: Time.new(2020, 07, 01, 14, 00, 00, Time.zone),
+        end_time: Time.new(2020, 07, 01, 16, 00, 00, Time.zone)
+      )
+     time_entry.update(end_time: nil)
+
+      expect(time_entry.valid?).to be false
+      expect(time_entry.errors[:end_time]).not_to be_empty
+    end
+  end
+
   context "time entries overlap" do
     it "start time overlaps with existing time entry" do
       user = create(:user)

@@ -30,8 +30,14 @@ feature "user tracks time" do
   end
 
   context "creating time entry manually" do
+    before(:each) do
+      Timecop.freeze(Time.new(2020, 5, 4))
+    end
+    after(:each) do
+      Timecop.return
+    end
+
     scenario "redirects to home page on success" do
-      Timecop.freeze(Time.new(2020, 05, 04))
       user = create(:user)
 
       visit new_time_entry_path(as: user)
@@ -46,12 +52,9 @@ feature "user tracks time" do
         expect(page).to have_content("11:00:00")
         expect(page).to have_content("12:00:00")
       end
-
-      Timecop.return
     end
 
     scenario "fails when end time is missing" do
-      Timecop.freeze(Time.new(2020, 05, 04))
       user = create(:user)
 
       visit new_time_entry_path(as: user)

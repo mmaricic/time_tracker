@@ -42,6 +42,15 @@ class TimeEntriesController < ApplicationController
     end
   end
 
+  def destroy
+    @time_entry = current_user.time_entries.find(params[:id])
+    if @time_entry.destroy
+      respond_to :js
+    else
+      head :bad_request
+    end
+  end
+
   private
 
   def time_entry_params

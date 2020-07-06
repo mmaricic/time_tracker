@@ -2,7 +2,7 @@ class TimeEntry < ApplicationRecord
   belongs_to :user
 
   validates :start_time, presence: true
-  validates :end_time, presence: true, if: ->{ manual_creation? }
+  validates :end_time, presence: true, if: ->{ manual_creation? || !end_time_was.nil? }
   validates :description, length: {maximum: 250}
   validate :start_time_is_before_end_time, unless: ->{ end_time.nil? || start_time.nil? }
   validate :start_time_does_not_overlap_with_existing_time_entries, unless: ->{ start_time.nil? }

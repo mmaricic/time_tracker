@@ -23,12 +23,22 @@ class TimeEntriesController < ApplicationController
     end
   end 
 
+  def edit
+    @time_entry = current_user.time_entries.find(params[:id])
+  end
+
   def update
     @time_entry = current_user.time_entries.find(params[:id])
     if @time_entry.update(time_entry_params)
-      respond_to :js  
+      respond_to do |format|
+        format.js
+        format.html { redirect_to root_path }
+      end
     else
-      head :bad_request
+      respond_to do |format|
+        format.js { head :bad_request }
+        format.html { render :edit }
+      end
     end
   end
 

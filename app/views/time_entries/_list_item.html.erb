@@ -12,4 +12,7 @@
     <span>total time:</span>
     <span><%= pp_total_time(time_entry.total_time) %></span>
   </div>
+   <div>
+  <%= link_to "Edit", edit_time_entry_path(time_entry) %>
+  </div>
 </div>

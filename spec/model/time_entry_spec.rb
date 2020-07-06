@@ -77,6 +77,17 @@ describe TimeEntry do
     expect(time_entry.errors[:end_time]).not_to be_empty
   end
 
+  it "validates that start_time is not the same as end_time" do
+    time_entry = build(
+      :time_entry, 
+      start_time: Time.new(2020, 07, 01, 15, 00, 00), 
+      end_time: Time.new(2020, 07, 01, 15, 00, 00)
+    )
+
+    expect(time_entry.valid?).to be false
+    expect(time_entry.errors[:end_time]).not_to be_empty
+  end
+
   context "creating time entry manually" do
     it "validates end time presence" do
       time_entry = build(

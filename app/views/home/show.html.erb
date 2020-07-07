@@ -7,6 +7,9 @@
 
 <%= link_to "Create manually", new_time_entry_path %>
 
+<div>
+  Total: <%= pp_collection_total_time(@time_entries_recorded_today) %>
+</div>
 <div id="time_entries_list">
   <%= render partial: "time_entries/list_item", collection: @time_entries_recorded_today, as: :time_entry %>
 </div>

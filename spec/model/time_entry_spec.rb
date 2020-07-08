@@ -52,6 +52,46 @@ describe TimeEntry do
     end
   end
 
+  describe "total_time_by_day" do
+    before(:each) do
+      Timecop.freeze(2020, 5, 4)
+    end
+    after(:each) do
+      Timecop.return
+    end
+
+    it "returns total time for last 3 days" do
+      create(
+        :time_entry,
+        start_time: Time.new(2020, 5, 1, 10, 0, 0, Time.zone),
+        end_time: Time.new(2020, 5, 1, 12, 0, 0, Time.zone)
+      )
+      create(
+        :time_entry,
+        start_time: Time.new(2020, 5, 2, 13, 0, 0, Time.zone),
+        end_time: Time.new(2020, 5, 2, 14, 30, 0, Time.zone)
+      )
+      create(
+        :time_entry,
+        start_time: Time.new(2020, 5, 4, 10, 0, 0, Time.zone),
+        end_time: Time.new(2020, 5, 4, 11, 0, 0, Time.zone)
+      )
+      create(
+        :time_entry,
+        start_time: Time.new(2020, 5, 4, 12, 0, 0, Time.zone),
+        end_time: Time.new(2020, 5, 4, 14, 30, 0, Time.zone)
+      )
+
+      result = described_class.total_time_by_day(last: 3)
+
+      expect(result).to eq(
+        "Sat, 2 May" => "01:30:00",
+        "Sun, 3 May" => "00:00:00",
+        "Mon, 4 May" => "03:30:00"
+      )
+    end
+  end
+
   it "validates start time presence" do
     time_entry = build(:time_entry, start_time: nil)
     

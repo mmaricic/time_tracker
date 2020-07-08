@@ -1,4 +1,4 @@
-$('#start_timer_form').css('display', 'block');
+$('#start_timer_form').css('display', 'flex');
 $('#stop_timer_form').remove();
 
 $('#time_entries_list').append("<%= j(render partial: "time_entries/list_item", locals: { time_entry: @time_entry }) %>");

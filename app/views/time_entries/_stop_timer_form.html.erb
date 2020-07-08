@@ -1,6 +1,9 @@
-<%= form_for time_entry, remote: true, html: { id: :stop_timer_form } do |f| %>
-  <%= f.text_field :description %>
+<%= form_for time_entry, remote: true, html: { id: :stop_timer_form, class: "d-flex" } do |f| %>
+  <%= f.text_field :description, class: "flex-grow-1", placeholder: "What are you working on?" %>
+  
   <%= f.hidden_field :end_time %>
-  <%= f.submit "Stop", id: :stop_timer_btn %>
-  <div data-timer="<%= time_entry.start_time.strftime("%Y-%m-%dT%H:%M:%S") %>"></div>
+  
+  <div data-timer="<%= time_entry.start_time.strftime("%Y-%m-%dT%H:%M:%S") %>" class="ml-2 mr-2 font-weight-bold" style="font-size: 28px"></div>
+  
+  <%= f.submit "Stop", id: :stop_timer_btn, class: "btn btn-primary btn-md", style: "width: 100px"%>
 <% end %>

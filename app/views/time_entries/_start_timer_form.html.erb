@@ -1,5 +1,9 @@
-<%= form_with scope: :time_entry, url: time_entries_path, remote: true, html: { id: :start_timer_form, style: "display: #{hidden ? 'none' : 'block'}" } do |f| %>
-  <%= f.text_field :description %>
+<%= form_with scope: :time_entry, url: time_entries_path, remote: true, html: { id: :start_timer_form, style: "display: #{hidden ? 'none' : 'flex'}" } do |f| %>
+  <%= f.text_field :description, class: "flex-grow-1", placeholder: "What are you working on?"  %>
+  
   <%= f.hidden_field :start_time %>
-  <%= f.submit "Start", id: :start_timer_btn %>
+  
+  <div class="ml-2 mr-2 font-weight-bold" style="font-size:28px">00:00:00</div>
+  
+  <%= f.submit "Start", id: :start_timer_btn, class: "btn btn-primary btn-md", style: "width: 100px" %>
 <% end %>

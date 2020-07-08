@@ -1,15 +1,19 @@
-<div id="timer_form_container">
-<%= render partial: "time_entries/start_timer_form", locals: { hidden: @active_time_entry.present? } %>
-<% if @active_time_entry.present? %>
-  <%= render partial: "time_entries/stop_timer_form", locals: { time_entry: @active_time_entry } %>
-<% end %>
-</div>
+<div style="margin: auto; width: 900px;">
+  <div id="timer_form_container">
+  <%= render partial: "time_entries/start_timer_form", locals: { hidden: @active_time_entry.present? } %>
+  <% if @active_time_entry.present? %>
+    <%= render partial: "time_entries/stop_timer_form", locals: { time_entry: @active_time_entry } %>
+  <% end %>
+  </div>
 
-<%= link_to "Create manually", new_time_entry_path %>
+  <div class="d-flex justify-content-end mt-2" style="font-size: 18px">
+    <%= link_to "Create manually", new_time_entry_path %>
+  </div>
 
-<div>
-  Total: <%= pp_collection_total_time(@time_entries_recorded_today) %>
-</div>
-<div id="time_entries_list">
-  <%= render partial: "time_entries/list_item", collection: @time_entries_recorded_today, as: :time_entry %>
+  <div class="font-weight-bold mt-5" style="font-size: 18px">
+    Total: <span> <%= pp_collection_total_time(@time_entries_recorded_today) %> </span>
+  </div>
+  <div id="time_entries_list">
+    <%= render partial: "time_entries/list_item", collection: @time_entries_recorded_today, as: :time_entry %>
+  </div>
 </div>

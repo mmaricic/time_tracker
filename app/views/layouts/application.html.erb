@@ -10,14 +10,27 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-light justify-content-between" style="background-color: #e3f2fd;">
-      <a class="navbar-brand">Time tracker</a>
-      <% if signed_in? %>
-        Signed in as: <%= current_user.email %>
-        <%= link_to 'Sign out', sign_out_path, method: :delete, class: "font-weight-bold" %>
-      <% else %>
-        <%= link_to 'Sign in', sign_in_path, class: "font-weight-bold" %>
-      <% end %>
+    <nav class="navbar navbar-light navbar-expand-lg" style="background-color: #e3f2fd; font-size: 18px">
+      <a class="navbar-brand ml-2">Time tracker</a>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <% if signed_in? %>
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <%= link_to 'Home', root_path, class: "font-weight-bold ml-2" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Statistics', statistics_path, class: "font-weight-bold ml-4" %>
+            </li>
+          </ul>
+          <span class="nav-item">
+            <%= link_to 'Sign out', sign_out_path, method: :delete, class: "font-weight-bold mr-2" %>
+            </span>
+        <% else %>
+          <span class="nav-item ml-auto mr-2">
+            <%= link_to 'Sign in', sign_in_path, class: "font-weight-bold" %>
+          </span>
+        <% end %>
+      </div>
     </nav>
 
     <%= yield %>

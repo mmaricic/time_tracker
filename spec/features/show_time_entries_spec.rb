@@ -1,8 +1,12 @@
 require "rails_helper"
 
-feature "show time entries" do
+feature "show time entries", type: :feature  do
   before(:each) do
-    Timecop.freeze(Time.new(2020, 5, 4))
+    Timecop.freeze(Time.new(2020, 5, 4, 19, 0, 0))
+  end
+
+  after(:each) do
+    Timecop.return
   end
 
   scenario "from today on home page" do
@@ -22,8 +26,8 @@ feature "show time entries" do
     today_second_te = create(
       :time_entry,
       user: user,
-      start_time: Time.new(2020, 05, 04, 12, 30, 00, Time.zone),
-      end_time: Time.new(2020, 05, 04, 14, 00, 00, Time.zone),
+      start_time: Time.new(2020, 5, 4, 12, 30, 0, Time.zone),
+      end_time: Time.new(2020, 5, 4, 14, 00, 0, Time.zone),
     )
     today_active_te = create(
       :time_entry,
@@ -39,7 +43,7 @@ feature "show time entries" do
     )
 
     visit root_path(as: user)
-
+    
     expect(page).to have_css(dom_id(today_first_te))
     within(dom_id(today_first_te)) do
       expect(page).to have_content("10:00:00")

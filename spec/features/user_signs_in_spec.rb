@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'user signs in' do
+feature 'user signs in', type: :feature  do
     it 'with valid credentials' do
         user = create(:user, email: 'johndoe@mail.com', password: 'password')
         

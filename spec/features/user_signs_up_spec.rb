@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'user signs up' do
+feature 'user signs up', type: :feature  do
   it 'with valid params' do
     visit sign_up_path
 

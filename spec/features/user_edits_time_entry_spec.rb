@@ -1,9 +1,10 @@
 require "rails_helper"
 
-feature "user edits time entry" do
+feature "user edits time entry", type: :feature  do
   before(:each) do
-    Timecop.freeze(Time.new(2020, 5, 4))
+    Timecop.freeze(Time.new(2020, 5, 4, 19, 0, 0, Time.zone))
   end
+
   after(:each) do
     Timecop.return
   end
@@ -13,22 +14,21 @@ feature "user edits time entry" do
     time_entry = create(
       :time_entry,
       user: user,
-      start_time: Time.new(2020, 05, 04, 11, 00, 00, Time.zone),
-      end_time: Time.new(2020, 05, 04, 14, 00, 00, Time.zone),
+      start_time: Time.new(2020, 5, 4, 11, 0, 0, Time.zone),
+      end_time: Time.new(2020, 5, 4, 14, 0, 0, Time.zone),
       description: "Initial description"
     )
 
     visit edit_time_entry_path(time_entry, as: user)
+    
     fill_in "Description", with: "New description"
     fill_in "End time", with: "2020-05-04T13:37:00"
     click_button "Update"
 
     expect(page).to have_current_path(root_path)
-    within "#time_entry_1" do
-      expect(page).to have_content("New description")
-      expect(page).to have_content("11:00:00")
-      expect(page).to have_content("13:37:00")
-    end
+    expect(page).to have_content("New description")
+    expect(page).to have_content("11:00:00")
+    expect(page).to have_content("13:37:00")
   end
 
   scenario "fails when entry is invalid" do
@@ -36,8 +36,8 @@ feature "user edits time entry" do
     time_entry = create(
       :time_entry,
       user: user,
-      start_time: Time.new(2020, 05, 04, 12, 00, 00, Time.zone),
-      end_time: Time.new(2020, 05, 04, 14, 00, 00, Time.zone),
+      start_time: Time.new(2020, 5, 4, 12, 0, 0, Time.zone),
+      end_time: Time.new(2020, 5, 4, 14, 0, 0, Time.zone),
       description: "Initial description"
     )
 

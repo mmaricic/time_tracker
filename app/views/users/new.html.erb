@@ -1,19 +1,18 @@
-<% @user.errors.full_messages.each do |error| %>
-<div> <%= error %> </div>
-<% end %>
-
-<div id="clearance" class="sign-up">
-  <h2><%= t(".title") %></h2>
+<div id="clearance" style="margin: auto;width: 500px;margin-top: 100px;">
+  <h2 class="mb-4 d-flex justify-content-center"><%= t(".title") %></h2>
 
   <%= form_for @user do |form| %>
     <%= render partial: '/users/form', object: form %>
 
-    <div class="submit-field">
-      <%= form.submit %>
-    </div>
-
-    <div class="other-links">
-      <%= link_to t(".sign_in"), sign_in_path %>
+    <div class="d-flex justify-content-center">
+      <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
     </div>
   <% end %>
+ 
+ <div class="other-links text-center mt-2">
+       <span> Have an account? </span>
+        <%= link_to t(".sign_in"), sign_in_path %>
+  </div>
+
+  <%= render partial: 'commons/errors', object: @user.errors.full_messages%>
 </div>

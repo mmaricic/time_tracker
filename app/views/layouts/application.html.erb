@@ -10,18 +10,15 @@
   </head>
 
   <body>
-    <% if signed_in? %>
-      Signed in as: <%= current_user.email %>
-      <%= button_to 'Sign out', sign_out_path, method: :delete %>
-    <% else %>
-      <%= link_to 'Sign in', sign_in_path %>
-    <% end %>
-   
-    <div id="flash">
-      <% flash.each do |key, value| %>
-        <div class="flash <%= key %>"><%= value %></div>
+    <nav class="navbar navbar-light justify-content-between" style="background-color: #e3f2fd;">
+      <a class="navbar-brand">Time tracker</a>
+      <% if signed_in? %>
+        Signed in as: <%= current_user.email %>
+        <%= link_to 'Sign out', sign_out_path, method: :delete, class: "font-weight-bold" %>
+      <% else %>
+        <%= link_to 'Sign in', sign_in_path, class: "font-weight-bold" %>
       <% end %>
-    </div>
+    </nav>
 
     <%= yield %>
   </body>

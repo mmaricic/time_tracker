@@ -1,10 +1,11 @@
-<% @time_entry.errors.full_messages.each do |error| %>
-  <div><%= error %></div>
-<% end %>
+<div style="margin: auto;width: 500px;">
+  <%= form_with model: @time_entry, local: true do |form| %>
+    <%= render partial: "form", object: form %>
 
-<%= form_with model: @time_entry, local: true do |form| %>
-  <%= render partial: "form", object: form %>
+    <%= form.hidden_field :manual, value: true %>
+    
+    <%= form.submit "Create", class: "btn btn-primary btn-md btn-block" %>
+  <% end %>
 
-  <%= form.hidden_field :manual, value: true %>
-  <%= form.submit "Create" %>
-<% end %>
+  <%= render partial: 'commons/errors', object: @time_entry.errors.full_messages %>
+</div>

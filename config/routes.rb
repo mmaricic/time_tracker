@@ -15,4 +15,5 @@ Rails.application.routes.draw do
   get "/sign_up" => "clearance/users#new", as: "sign_up"
 
   resources :time_entries, only: [:new, :create, :edit, :update, :destroy]
+  get :statistics, to: "statistics#show"
 end

@@ -10,6 +10,8 @@ require("channels")
 require("jquery")
 require("../time_entry")
 window.FakeTimer = require("@sinonjs/fake-timers")
+require("chartkick")
+require("chart.js")
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference

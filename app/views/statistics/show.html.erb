@@ -1,0 +1,5 @@
+<div style="margin: auto; width: 1000px">
+  <h2 class='text-center mb-4'>Weekly data</h2>
+  <%= column_chart current_user.time_entries.total_time_by_day(last: 7), width: '1000px', suffix: 'h' %>
+</div>
+

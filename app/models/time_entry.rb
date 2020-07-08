@@ -16,6 +16,24 @@ class TimeEntry < ApplicationRecord
     def recorded_today
       where('end_time IS NOT NULL and DATE(start_time) = ?', Date.today)
     end
+
+    def total_time_by_day(last:)
+      result = select('DATE(start_time) as date, SUM(end_time - start_time) as total_time')
+        .where("DATE(start_time) > DATE('#{Date.current}') - #{Arel.sql(last.to_s)}")
+        .group('DATE(start_time)')
+        .order('DATE(start_time)')
+        .to_a
+        .map{ |hash| [hash['date'], hash['total_time']] }.to_h
+
+      ((Date.current - (last - 1).days)..Date.current).each do |date|
+        result[date] = '00:00:00' unless result.key?(date)
+      end
+      
+      result
+        .sort
+        .to_h
+        .transform_keys{ |k| k.strftime('%a, %-d %b') }
+    end
   end
 
   def total_time 

@@ -13,8 +13,8 @@ class TimeEntry < ApplicationRecord
       where('end_time IS NULL')
     end
 
-    def recorded_today
-      where('end_time IS NOT NULL and DATE(start_time) = ?', Date.today)
+    def recorded_on_date(date)
+      where('end_time IS NOT NULL and DATE(start_time) = ?', date)
     end
 
     def total_time_by_day(last:)

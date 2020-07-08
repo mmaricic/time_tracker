@@ -1,11 +1,7 @@
 require 'rails_helper'
 
 describe TimeEntry do
-  describe '.recorded_today' do
-    before(:each) do
-      Timecop.freeze(Time.new(2020, 5, 4))
-    end
-
+  describe '.recorded_on_date' do
     it 'returns time entries recorded on the current day' do
       yesterday_te = create(
         :time_entry,
@@ -28,7 +24,9 @@ describe TimeEntry do
         end_time: nil
       )
 
-      expect(described_class.recorded_today).to match_array([
+      result = described_class.recorded_on_date(Date.new(2020, 5, 4))
+
+      expect(result).to match_array([
         today_first_te,
         today_second_te
       ])

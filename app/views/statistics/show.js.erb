@@ -1,0 +1,2 @@
+$("#total_time").html("<%= pp_collection_total_time(@time_entries_recorded_on_date) %>");
+$("#time_entries_list").html("<%= j(render partial: "time_entries/list_item", collection: @time_entries_recorded_on_date, as: :time_entry) %>");

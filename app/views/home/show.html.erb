@@ -6,11 +6,11 @@
   <% end %>
   </div>
 
-  <div class="d-flex justify-content-end mt-2" style="font-size: 18px">
+  <div class="d-flex justify-content-end mt-2 font-18">
     <%= link_to "Create manually", new_time_entry_path %>
   </div>
 
-  <div class="font-weight-bold mt-5" style="font-size: 18px">
+  <div class="font-weight-bold mt-5 font-18">
     Total: <span> <%= pp_collection_total_time(@time_entries_recorded_today) %> </span>
   </div>
   <div id="time_entries_list">

@@ -10,3 +10,25 @@
   color: #fff;
   border-radius: 50%;
 }
+
+.font-18 {
+  font-size: 18px;
+}
+
+.w-100px {
+  width: 100px;
+}
+
+.default-form {
+  width: 500px;
+  margin: auto;
+}
+
+.time-counter {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  text-align: center;
+  font-size: 28px; 
+  font-weight: 700;
+  width: 130px;
+}

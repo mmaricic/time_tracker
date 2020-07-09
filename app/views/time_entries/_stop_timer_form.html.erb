@@ -1,5 +1,5 @@
 <%= form_for time_entry, remote: true, html: { id: :stop_timer_form, class: "d-flex" } do |f| %>
-  <%= f.text_field :description, class: "flex-grow-1", placeholder: "What are you working on?" %>
+  <%= f.text_field :description, class: "flex-grow-1", placeholder: "What are you working on,  #{current_user.first_name}?" %>
   
   <%= f.hidden_field :end_time %>
   

@@ -1,5 +1,5 @@
 <%= form_with scope: :time_entry, url: time_entries_path, remote: true, html: { id: :start_timer_form, style: "display: #{hidden ? 'none' : 'flex'}" } do |f| %>
-  <%= f.text_field :description, class: "flex-grow-1", placeholder: "What are you working on?"  %>
+  <%= f.text_field :description, class: "flex-grow-1", placeholder: "What are you working on, #{current_user.first_name}?"  %>
   
   <%= f.hidden_field :start_time %>
   

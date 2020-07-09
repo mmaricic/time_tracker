@@ -1,4 +1,9 @@
+require 'contracts'
+
 class TimeEntry < ApplicationRecord
+  include Contracts::Core
+  include Contracts::Builtin
+    
   belongs_to :user
 
   validates :start_time, presence: true
@@ -9,14 +14,17 @@ class TimeEntry < ApplicationRecord
   validate :end_time_does_not_overlap_with_existing_time_entries, unless: ->{ end_time.nil? }
 
   class << self
+    Contract None => CustomTypes::ActiveRecordRelationOf[TimeEntry]
     def active
       where('end_time IS NULL')
     end
 
+    Contract Or[Date, CustomTypes::DateString] => CustomTypes::ActiveRecordRelationOf[TimeEntry]
     def recorded_on_date(date)
       where('end_time IS NOT NULL and DATE(start_time) = ?', date)
     end
 
+    Contract HashOf[last: CustomTypes::PosInt] => HashOf[String, String]
     def total_time_by_day(last:)
       result = select('DATE(start_time) as date, SUM(end_time - start_time) as total_time')
         .where("DATE(start_time) > DATE('#{Date.current}') - #{Arel.sql(last.to_s)}")
@@ -36,16 +44,19 @@ class TimeEntry < ApplicationRecord
     end
   end
 
+  Contract None => CustomTypes::PosInt
   def total_time 
     (end_time - start_time).to_i
   end
 
+  Contract None => true
   def set_manual_creation
     @manual_creation = true
   end
 
+  Contract None => Bool
   def manual_creation?
-    @manual_creation
+    @manual_creation ||= false
   end
 
   private 

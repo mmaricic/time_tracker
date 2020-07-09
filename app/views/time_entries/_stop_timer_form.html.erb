@@ -3,7 +3,7 @@
   
   <%= f.hidden_field :end_time %>
   
-  <div data-timer="<%= time_entry.start_time.strftime("%Y-%m-%dT%H:%M:%S") %>" class="ml-2 mr-2 font-weight-bold" style="font-size: 28px"></div>
+  <div data-timer="<%= time_entry.start_time.strftime("%Y-%m-%dT%H:%M:%S") %>" class="ml-2 mr-2 font-weight-bold" style="font-size: 28px; width: 115px"></div>
   
   <%= f.submit "Stop", id: :stop_timer_btn, class: "btn btn-primary btn-md", style: "width: 100px"%>
 <% end %>

@@ -12,6 +12,8 @@ class TimeEntry < ApplicationRecord
   validate :start_time_is_before_end_time, unless: ->{ end_time.nil? || start_time.nil? }
   validate :start_time_does_not_overlap_with_existing_time_entries, unless: ->{ start_time.nil? }
   validate :end_time_does_not_overlap_with_existing_time_entries, unless: ->{ end_time.nil? }
+  validate :does_not_overlap_with_active_time_entry, unless:  ->{ end_time.nil? || start_time.nil? }
+  validate :does_not_include_existing_time_entry, unless: ->{ end_time.nil? || start_time.nil? }
 
   class << self
     Contract None => CustomTypes::ActiveRecordRelationOf[TimeEntry]
@@ -80,6 +82,30 @@ class TimeEntry < ApplicationRecord
     scope = scope.where.not(id: id) unless new_record?
     if scope.exists?
       errors.add(field, :invalid, message: "cannot overlap with an existing time entries")
+    end
+  end
+
+  def does_not_include_existing_time_entry 
+    scope = TimeEntry
+    .where(user: user)
+    .where("start_time >= :start_time and end_time <= :end_time", start_time: start_time, end_time: end_time)
+    scope = scope.where.not(id: id) unless new_record?
+   
+    if scope.exists?
+      errors.add(:base, :invalid, message: "Time entry cannot include time period of an existing time entry")
+    end
+  end
+
+
+  def does_not_overlap_with_active_time_entry
+    scope = TimeEntry
+    .where(user: user)
+    .active
+    .where("start_time <= :start_time or start_time <= :end_time", start_time: start_time, end_time: end_time)
+    scope = scope.where.not(id: id) unless new_record?
+
+    if scope.exists?
+      errors.add(:base, :invalid, message: "Time entry cannot overlap with the start of the ative time entry nor it can be in the future if time tracker is active")
     end
   end
 end

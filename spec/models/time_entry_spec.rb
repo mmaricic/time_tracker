@@ -126,6 +126,57 @@ describe TimeEntry do
     expect(time_entry.errors[:end_time]).not_to be_empty
   end
 
+  it "validates that time entry does not include existing time entry" do
+    user = create(:user)
+    old_entry = create(
+      :time_entry,
+      user: user,
+      start_time: Time.new(2020, 5, 4, 10, 0, 0, Time.zone),
+      end_time: Time.new(2020, 5, 4, 12, 0, 0, Time.zone)
+    )
+
+    new_entry = build(
+      :time_entry,
+      user: user,
+      start_time: Time.new(2020, 5, 4, 9, 0, 0, Time.zone),
+      end_time: Time.new(2020, 5, 4, 14, 0, 0, Time.zone)
+    )
+
+    expect(new_entry.valid?).to be false
+    expect(new_entry.errors[:base]).not_to be_empty
+  end
+
+  it "validates that time_entry is not after active time_entry" do
+    user = create(:user)
+    old_entry = create(
+      :time_entry,
+      user: user,
+      start_time: Time.new(2020, 5, 4, 10, 0, 0, Time.zone),
+      end_time: Time.new(2020, 5, 4, 11, 30, 0, Time.zone)
+    )
+    active_entry = create(
+      :time_entry,
+      user: user,
+      start_time: Time.new(2020, 5, 4, 12, 0, 0, Time.zone),
+      end_time: nil
+    )
+    new_entry = build(
+      :time_entry,
+      user: user,
+      start_time: Time.new(2020, 5, 4, 12, 30, 0, Time.zone),
+      end_time: Time.new(2020, 5, 4, 13, 30, 0, Time.zone)
+    )
+
+    expect(new_entry.valid?).to be false
+    expect(new_entry.errors[:base]).not_to be_empty
+
+    old_entry.update(end_time: Time.new(2020, 5, 4, 12, 30, 0, Time.zone))
+
+    expect(old_entry.valid?).to be false
+    expect(old_entry.errors[:base]).not_to be_empty
+
+  end
+
   context "creating time entry manually" do
     it "validates end time presence" do
       time_entry = build(
@@ -141,7 +192,7 @@ describe TimeEntry do
   end
 
   context "updating time entry" do
-    it "validated time_entry presence" do
+    it "validates end_time presence" do
       time_entry = create(
         :time_entry,
         start_time: Time.new(2020, 07, 01, 14, 00, 00, Time.zone),

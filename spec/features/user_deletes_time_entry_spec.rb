@@ -18,6 +18,7 @@ feature "user deletes time entry", js: true, type: :feature do
     )
     visit root_path( as: user)
 
+    expect(page).to have_css("#total_time", text: "3h 0m 0s")
     within "#time_entry_#{time_entry.id}" do
       accept_confirm(/are you sure/i) do
         click_link "Delete"
@@ -25,5 +26,6 @@ feature "user deletes time entry", js: true, type: :feature do
     end
 
     expect(page).not_to have_css("#time_entry_#{time_entry.id}")
+    expect(page).to have_css("#total_time", text: "0h 0m 0s")
   end
 end

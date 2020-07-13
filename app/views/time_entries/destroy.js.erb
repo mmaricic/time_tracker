@@ -1,1 +1,6 @@
-$('#<%= dom_id(@time_entry) %>').remove();
+$('#<%= dom_id(@time_entry) %>').attr('data-marked-for-destruction', true);
+
+$('#total_time').each(function(index, el) {
+  const oldTotalTime = Number(el.dataset.totalTime);
+  el.dataset.totalTime = `${oldTotalTime - Number('<%= @time_entry.total_time %>')}`;
+});

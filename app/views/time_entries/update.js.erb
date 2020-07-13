@@ -1,4 +1,8 @@
 $('#start_timer_form').css('display', 'flex');
-$('#stop_timer_form').remove();
+$('#stop_timer_form').attr('data-marked-for-destruction', true);
 
 $('#time_entries_list').append("<%= j(render partial: "time_entries/list_item", locals: { time_entry: @time_entry }) %>");
+$('#total_time').each(function(index, el) {
+  const oldTotalTime = Number(el.dataset.totalTime);
+  el.dataset.totalTime = `${oldTotalTime + Number('<%= @time_entry.total_time %>')}`;
+});

@@ -1,12 +1,23 @@
 $(document).on('turbolinks:load', function() {
+  removeElementsMarkedForDestruction();
   fillTimeFields();
   startTimer();
 });
 
 $(document).on('ajax:success', function() {
+  removeElementsMarkedForDestruction();
   fillTimeFields();
   startTimer();
+
+  $('[data-total-time]').each(function(index, el) {
+    const totalTime = el.dataset.totalTime;
+    el.textContent = formatTime(totalTime);
+  })
 });
+
+function removeElementsMarkedForDestruction(){
+  $('[data-marked-for-destruction]').remove();
+}
 
 function fillTimeFields() {
   $('#start_timer_form').submit(function() {
@@ -43,6 +54,15 @@ function formatTimerValue(seconds) {
 
   return `${hours}:${mins}:${secs}`;
 }
+
+function formatTime(seconds) {
+  const secs = Math.round(seconds % 60);
+  const mins = Math.round(seconds / 60 % 60);
+  const hours = Math.round(seconds / 3600);
+
+  return `${hours}h ${mins}m ${secs}s`;
+}
+
 
 function pad(val) {
   var valString = val + "";

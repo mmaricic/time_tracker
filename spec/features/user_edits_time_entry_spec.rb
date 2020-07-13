@@ -29,6 +29,7 @@ feature "user edits time entry", type: :feature  do
     expect(page).to have_content("New description")
     expect(page).to have_content("11:00:00")
     expect(page).to have_content("13:37:00")
+    expect(page).to have_css("#total_time", text: "2h 37m 0s")
   end
 
   scenario "fails when entry is invalid" do

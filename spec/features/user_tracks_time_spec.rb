@@ -10,6 +10,7 @@ feature "user tracks time", type: :feature  do
       Timecop.freeze(start_time)
       visit root_path(as: user)
       mock_browser_time
+      expect(page).to have_css("#total_time", text: "0h 0m 0s")
 
       fill_in "time_entry_description", with: "Work"
       click_button "Start"
@@ -22,6 +23,7 @@ feature "user tracks time", type: :feature  do
       click_button "Stop"
       wait_for_ajax
     
+      expect(page).to have_css("#total_time", text: "3h 0m 0s")
       expect(page).to have_content("Work")
       expect(page).to have_content("10:00")
       expect(page).to have_content("13:00")
@@ -74,6 +76,7 @@ feature "user tracks time", type: :feature  do
       expect(page).to have_content("manual test")
       expect(page).to have_content("11:00:00")
       expect(page).to have_content("12:00:00")
+      expect(page).to have_css("#total_time", text: "1h 0m 0s")
     end
 
     scenario "fails when end time is missing" do

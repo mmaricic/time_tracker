@@ -41,24 +41,24 @@ function startTimer() {
     const timerValue =  (new Date().getTime() - startTime.getTime()) / 1000;
     element.innerHTML = formatTimerValue(timerValue);
     setInterval(function() {
-      const timerValue =  (new Date().getTime() - startTime.getTime()) / 1000;
+      const timerValue =  Math.floor((new Date().getTime() - startTime.getTime()) / 1000);
       element.innerHTML = formatTimerValue(timerValue);
     }, 1000)
   })
 }
 
 function formatTimerValue(seconds) {
-  const secs = pad(Math.round(seconds % 60));
-  const mins = pad(Math.round(seconds / 60 % 60));
-  const hours = pad(Math.round(seconds / 3600));
+  const secs = pad(Math.floor(seconds % 60));
+  const mins = pad(Math.floor(seconds / 60 % 60));
+  const hours = pad(Math.floor(seconds / 3600));
 
   return `${hours}:${mins}:${secs}`;
 }
 
 function formatTime(seconds) {
-  const secs = Math.round(seconds % 60);
-  const mins = Math.round(seconds / 60 % 60);
-  const hours = Math.round(seconds / 3600);
+  const secs = Math.floor(seconds % 60);
+  const mins = Math.floor(seconds / 60 % 60);
+  const hours = Math.floor(seconds / 3600);
 
   return `${hours}h ${mins}m ${secs}s`;
 }

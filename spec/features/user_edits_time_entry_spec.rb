@@ -21,12 +21,12 @@ feature "user edits time entry", type: :feature  do
 
     visit edit_time_entry_path(time_entry, as: user)
     
-    fill_in "Description", with: "New description"
+    fill_in "Description", with: ""
     fill_in "End time", with: "2020-05-04T13:37:00"
     click_button "Update"
 
     expect(page).to have_current_path(root_path)
-    expect(page).to have_content("New description")
+    expect(page).to have_content("No description")
     expect(page).to have_content("11:00:00")
     expect(page).to have_content("13:37:00")
     expect(page).to have_css("#total_time", text: "2h 37m 0s")
